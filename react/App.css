@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.landing-page {
+  height: 100vh;
+  background-image: url("./nursery.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.55);
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+}
+
+.overlay h1 {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.get-started-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.get-started-btn:hover {
+  background: #218838;
+}
