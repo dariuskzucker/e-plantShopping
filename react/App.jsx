@@ -1,14 +1,13 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-
-import ProductList from "./ProductList";
-import CartItem from "./CartItem";
-import AboutUs from "./AboutUs";
-
+import React, { useState } from "react";
 import "./App.css";
+import ProductList from "./ProductList";
 
-function LandingPage() {
-  const navigate = useNavigate();
+function App() {
+  const [showProductList, setShowProductList] = useState(false);
+
+  if (showProductList) {
+    return <ProductList />;
+  }
 
   return (
     <div className="landing-page">
@@ -19,29 +18,14 @@ function LandingPage() {
           Bringing nature into your home with beautiful and healthy plants.
         </p>
 
-        <br />
-
         <button
           className="get-started-btn"
-          onClick={() => navigate("/plants")}
+          onClick={() => setShowProductList(true)}
         >
           Get Started
         </button>
       </div>
     </div>
-  );
-}
-
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/plants" element={<ProductList />} />
-        <Route path="/cart" element={<CartItem />} />
-      </Routes>
-    </BrowserRouter>
   );
 }
 

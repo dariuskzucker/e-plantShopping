@@ -1,44 +1,55 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  increaseQuantity,
-  decreaseQuantity,
-  removeItem
-} from "../redux/CartSlice";
+  removeItem,
+  updateQuantity
+} from "./CartSlice";
 
-import { Link } from "react-router-dom";
-
-const CartItem = () => {
+function CartItem() {
   const dispatch = useDispatch();
 
-  const items = useSelector(state => state.cart.items);
-
-  const totalAmount = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
+  const cartItems = useSelector(
+    state => state.cart.items
   );
+
+  const calculateTotalAmount = () => {
+    return cartItems.reduce(
+      (total, item) =>
+        total + item.price * item.quantity,
+      0
+    );
+  };
+
+  const increaseQuantity = item => {
+    dispatch(
+      updateQuantity({
+        id: item.id,
+        quantity: item.quantity + 1
+      })
+    );
+  };
+
+  const decreaseQuantity = item => {
+    if (item.quantity > 1) {
+      dispatch(
+        updateQuantity({
+          id: item.id,
+          quantity: item.quantity - 1
+        })
+      );
+    }
+  };
 
   return (
     <div>
-      <nav>
-        <Link to="/">Home</Link> |{" "}
-        <Link to="/plants">Plants</Link> |{" "}
-        <Link to="/cart">Cart</Link>
-      </nav>
-
       <h1>Shopping Cart</h1>
 
-      <h2>Total Amount: ${totalAmount}</h2>
+      <h2>
+        Total Amount: ${calculateTotalAmount()}
+      </h2>
 
-      {items.map(item => (
-        <div
-          key={item.id}
-          style={{
-            border: "1px solid #ddd",
-            margin: "10px",
-            padding: "10px"
-          }}
-        >
+      {cartItems.map(item => (
+        <div key={item.id}>
           <img
             src={item.image}
             alt={item.name}
@@ -54,20 +65,14 @@ const CartItem = () => {
             {item.price * item.quantity}
           </p>
 
-          <p>Quantity: {item.quantity}</p>
-
           <button
-            onClick={() =>
-              dispatch(increaseQuantity(item.id))
-            }
+            onClick={() => increaseQuantity(item)}
           >
             +
           </button>
 
           <button
-            onClick={() =>
-              dispatch(decreaseQuantity(item.id))
-            }
+            onClick={() => decreaseQuantity(item)}
           >
             -
           </button>
@@ -83,21 +88,16 @@ const CartItem = () => {
       ))}
 
       <button
-        onClick={() =>
-          alert("Checkout Coming Soon")
-        }
+        onClick={() => alert("Coming Soon")}
       >
         Checkout
       </button>
 
-      <br />
-      <br />
-
-      <Link to="/plants">
-        <button>Continue Shopping</button>
-      </Link>
+      <button>
+        Continue Shopping
+      </button>
     </div>
   );
-};
+}
 
 export default CartItem;

@@ -156,7 +156,7 @@ const ProductList = () => {
 
   return (
     <>
-      <nav>
+      <nav className="navbar">
         <Link to="/">Home</Link> |{" "}
         <Link to="/plants">Plants</Link> |{" "}
         <Link to="/cart">Cart ({totalCount})</Link>
